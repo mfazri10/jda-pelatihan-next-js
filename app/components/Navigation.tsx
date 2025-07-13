@@ -24,6 +24,12 @@ export default function Navigation() {
               About
             </Link>
             <Link
+              href="/projects"
+              className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+            >
+              Projects
+            </Link>
+            <Link
               href="/contact"
               className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 px-3 py-2 rounded-md text-sm font-medium transition-colors"
             >

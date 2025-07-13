@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import { getFeaturedProjects } from './lib/projects';
 
 export default function Home() {
+  const featuredProjects = getFeaturedProjects();
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-100 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 py-16">
@@ -34,29 +37,50 @@ export default function Home() {
             Featured Projects
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[1, 2, 3].map((project) => (
-              <div key={project} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            {featuredProjects.map((project) => (
+              <Link
+                key={project.id}
+                href={`/projects/${project.id}`}
+                className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow block"
+              >
                 <div className="h-48 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                  <span className="text-white text-4xl font-bold">P{project}</span>
+                  <span className="text-white text-4xl font-bold">
+                    {project.title.split(' ').map(word => word[0]).join('').slice(0, 2)}
+                  </span>
                 </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-                    Project {project}
+                    {project.title}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    A brief description of this amazing project and the technologies used to build it.
+                    {project.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm">
-                      React
-                    </span>
-                    <span className="px-3 py-1 bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 rounded-full text-sm">
-                      Next.js
-                    </span>
+                    {project.technologies.slice(0, 3).map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 rounded-full text-sm"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                    {project.technologies.length > 3 && (
+                      <span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 rounded-full text-sm">
+                        +{project.technologies.length - 3} more
+                      </span>
+                    )}
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
+          </div>
+          <div className="text-center mt-8">
+            <Link
+              href="/projects"
+              className="inline-flex items-center px-6 py-3 border border-gray-300 dark:border-gray-600 text-base font-medium rounded-md text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            >
+              View All Projects
+            </Link>
           </div>
         </div>
 
