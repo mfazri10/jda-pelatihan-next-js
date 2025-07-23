@@ -10,7 +10,7 @@ interface ProjectPageProps {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { id } = await params;
-  const project = await getProjectById(id);
+  const project = getProjectById(id);
 
   if (!project) {
     notFound();
